@@ -34,7 +34,7 @@
     // self.view.autoresizesSubviews = YES;
     //tool.hidden=YES;
     NSLog(@"navi %f",self.navigationController.navigationBar.frame.size.height);
-    
+    NSLog(@"22332323232");
     self.WebService=[[WebService alloc]init];
     GenderList=[NSMutableArray arrayWithObjects:@"Male",@"Female", nil];
     
