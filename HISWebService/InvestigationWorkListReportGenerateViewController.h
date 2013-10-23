@@ -38,6 +38,7 @@
     NSString *words;
     NSMutableArray *AllDescriptions ;
     NSMutableArray *Description;
+    NSMutableArray *copy_array;
     IBOutlet UIView *viewPage;
     
 }

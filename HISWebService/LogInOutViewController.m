@@ -35,8 +35,8 @@
     [super viewDidLoad];
     activity.hidden=YES;
     self.WebService = [[WebService alloc] init];
-    UserName1.text=@"badal";
-    UserPassword.text=@"badal@123";
+    UserName1.text=@"cloudchowk";
+    UserPassword.text=@"chowk@123";
     remember=@"false";
     
     CheckMark=[[UIButton alloc]initWithFrame:CGRectMake(10,280,30,30)];

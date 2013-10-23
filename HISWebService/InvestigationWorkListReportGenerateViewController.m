@@ -38,7 +38,7 @@
     
      
     self.WebService=[[WebService alloc]init];
-    
+    copy_array =[[NSMutableArray alloc]init];
     NSLog(@"dictonay %@",Dictionay_Worklist);
     
     ScrollView=[[UIScrollView alloc]initWithFrame:CGRectMake(0,0,320,568)];
@@ -798,8 +798,18 @@
 //            [subview setBounces:NO];
 //        }
 //    }
+    
+    
+    
+    
+    
+    
+    
     NSString *html=[NSString stringWithFormat:@"%@",[[self.WebService->ptr1 objectAtIndex:0]valueForKey:@"CommentHTML"]];
     NSLog(@"html %@",html);
+    NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"'"];
+    html= [[html componentsSeparatedByCharactersInSet:doNotWant]componentsJoinedByString:@"&rsquo;"];
+    
     NSArray *split = [html componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
     split = [split filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
     NSString *res1 = [split componentsJoinedByString:@""];
@@ -1010,6 +1020,7 @@
                 NSLog(@"val is %@",result_value);
                 self.WebService->test_id=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:i]valueForKey:@"TestId"]];
                 self.WebService->investigation_id=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:i]valueForKey:@"InvestigationId"]];
+                
                 if(![[listTestVal objectAtIndex:i]valueForKey:@"text"]||[[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:i]valueForKey:@"text"]]isEqualToString:@""])
                 {
                     self.WebService->resultval=(NSString*)[NSNull null];

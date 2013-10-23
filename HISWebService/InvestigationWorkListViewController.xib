@@ -101,7 +101,7 @@
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <textInputTraits key="textInputTraits"/>
                     <connections>
-                        <action selector="SearchPatients:" destination="-1" eventType="editingDidEnd" id="Y6F-OE-1Py"/>
+                        <action selector="SearchPatients:" destination="-1" eventType="editingChanged" id="Ej4-9a-ybE"/>
                         <outlet property="delegate" destination="-1" id="X8I-Nn-a2P"/>
                     </connections>
                 </textField>
