@@ -379,8 +379,15 @@
 //    close.tag=3;
 //    
 //    self.navigationItem.rightBarButtonItem=close;
-
+ NSLog(@"list %@",Description);
     listTestVal=[[NSMutableArray alloc]init];
+    
+    for (int i=0; i<Description.count; i++) {
+        [listTestVal addObject:[NSNull null]];
+    }
+    
+    
+    NSLog(@"list %@",listTestVal);
     // Do any additional setup after loading the view from its nib.
 }
 -(void)Previouspage:(UIBarButtonItem*)sender
@@ -392,22 +399,52 @@
             viewPage.hidden=YES;
             self.navigationItem.rightBarButtonItems=nil;
             self.navigationItem.hidesBackButton=NO;
+          
+            /////////////
+            
+            NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
+            UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
+            UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
+            NSLog(@"txt %@  %d",txt,txt.tag);
+           // txt.text=[NSString stringWithFormat:@"%@",html];
+           
+           
+            if (chk_cmmt!=1) {
+                 [listTestVal replaceObjectAtIndex:indexPath1.row withObject:[NSNull null]];
+            }
+            ////////////
+            
             break;
         }
         case 2:
         {
 
+            NSLog(@"row %d",_row);
+            
             NSString *html = [webView stringByEvaluatingJavaScriptFromString:@"CKEDITOR.instances.editor1.getData()"];
             NSLog(@"val is %@",html);
             NSCharacterSet *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"\n\t"];
             html= [[html componentsSeparatedByCharactersInSet:doNotWant]componentsJoinedByString:@""];
             NSLog(@"%@", html); // => foobarbazfoo
-            NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
-            UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
-            UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
-            NSLog(@"txt %@  %d",txt,txt.tag);
-            txt.text=[NSString stringWithFormat:@"%@",html];
-            NSLog(@"txt %@",txt.text);
+            NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:0];
+            UITableViewCell *cell = [self->Table_worklist cellForRowAtIndexPath:indexPath1];
+            
+            UITextField *txt=(UITextField*)[cell viewWithTag:indexPath1.row+100];
+            
+            NSLog(@"ind  txt %@ , %d",txt,txt.tag);
+            
+            ///////////////////
+            txt.text=[NSString stringWithFormat:@"%@",[[CommentList objectAtIndex:indexPath1.row]valueForKey:@"Name"]];
+            
+             NSLog(@"txt %@",txt.text);
+            
+            [listTestVal replaceObjectAtIndex:indexPath1.row withObject:html];
+            NSLog(@"array %@",listTestVal);
+            chk_cmmt=1;
+            //////////////
+            
+            
+           
             viewPage.hidden=YES;
             self.navigationItem.rightBarButtonItems=nil;
             self.navigationItem.hidesBackButton=NO;
@@ -705,7 +742,15 @@
             [cell.contentView addSubview:CheckMark];
           }
 
-        [listTestVal addObject:resultval];
+        //[listTestVal addObject:resultval];
+        if ([resultval.text isEqualToString:@""]) {
+              [listTestVal replaceObjectAtIndex:indexPath.row withObject:[NSNull null]];
+        }
+        else
+        {
+         [listTestVal replaceObjectAtIndex:indexPath.row withObject:resultval.text];
+        }
+            NSLog(@"list %@",listTestVal);
     }
     UILabel *lbl=(UILabel *)[cell viewWithTag:1];
         NSString *_description=[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:indexPath.row]objectForKey:@"Description"]]];
@@ -763,14 +808,14 @@
 
 -(void)settext:(NSString*)string1
 {
-    NSLog(@"k %d",_row);
-    
-    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
-    UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
-    UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
-       NSLog(@"txt %@  %d",txt,txt.tag);
-    txt.text=[NSString stringWithFormat:@"%@",string1];
-       NSLog(@"txt %@",txt.text);
+    NSLog(@"k %@",string1);
+//    
+//    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
+//    UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
+//    UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
+//       NSLog(@"txt %@  %d",txt,txt.tag);
+//    txt.text=[NSString stringWithFormat:@"%@",string1];
+//       NSLog(@"txt %@",txt.text);
 
 }
 
@@ -833,22 +878,30 @@
     
     NSLog(@"ind  %d",_row);
     
-    NSIndexPath *indexPath2 = [Table_worklist indexPathForCell:(UITableViewCell*)[[sender superview]superview]];
-    NSLog(@"indexpath 2 %@",indexPath2);
-   _section=indexPath2.section;
-    NSLog(@"ind  %d",_section);
+//    NSIndexPath *indexPath2 = [Table_worklist indexPathForCell:(UITableViewCell*)[[sender superview]superview]];
+//    NSLog(@"indexpath 2 %@",indexPath2);
+//   _section=indexPath2.section;
+//    NSLog(@"ind  %d",_section);
     
     //[Table_Commentlist removeFromSuperview];
     // cell1 = (UITableViewCell *)sender.superview.superview;
   //  NSIndexPath *indexPath = [Table_worklist indexPathForCell:cell1];
   //  NSLog(@"index %@",indexPath);
-    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
-    UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
+//    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:[reconizer tag]-300 inSection:0];
+//    UITableViewCell *cell = [self->table_AdviseTestDetails cellForRowAtIndexPath:indexPath1];
     
-    UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
+//    NSLog(@"cell %@",cell);
+//    
+//    UIButton *btn=(UIButton*)[cell viewWithTag:indexPath1.row+300];
+//
+    NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:0];
+    UITableViewCell *cell = [self->Table_worklist cellForRowAtIndexPath:indexPath1];
     
+    UITextField *txt=(UITextField*)[cell viewWithTag:indexPath1.row+100];
+   
     NSLog(@"ind  txt %@ , %d",txt,txt.tag);
-    
+    UILabel *lbl=(UILabel*)[cell viewWithTag:3];
+    NSLog(@"lbl %@",lbl);
     //  for(int i=0;i<TestSample.count;i++)
     //{
     self.WebService->investigation_id=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:indexPath1.row]objectForKey:@"InvestigationId"]];
@@ -968,7 +1021,16 @@
     UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
     UITextField *txt=(UITextField*)[cell viewWithTag:TxtResult.tag];
     NSLog(@"ind  txt %@ , %d",txt,txt.tag);
-
+    
+    
+   ////////////
+     [listTestVal replaceObjectAtIndex:indexPath1.row withObject:txt.text];
+   /////////////
+    
+    
+    
+    UILabel *lbl=(UILabel*)[cell viewWithTag:3];
+    NSLog(@"lbl %@",lbl);
     float x=[txt.text floatValue];
     NSCharacterSet  *doNotWant = [NSCharacterSet characterSetWithCharactersInString:@"-"];
     NSString *Criticallow=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:indexPath1.row]objectForKey:@"CriticalLow"]];
@@ -1068,10 +1130,37 @@
             NSLog(@"%@", html); // => foobarbazfoo
             NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:_row-200 inSection:_section];
             UITableViewCell *cell = (UITableViewCell *)[Table_worklist cellForRowAtIndexPath:indexPath1];
-            UITextField *txt=(UITextField*)[cell viewWithTag:_row-100];
+            UITextField *txt=(UITextField*)[cell viewWithTag:indexPath1.row+100];
             NSLog(@"txt %@  %d",txt,txt.tag);
+            
+            
             txt.text=[NSString stringWithFormat:@"%@",html];
             NSLog(@"txt %@",txt.text);
+            
+            
+            
+          //  for (int i=0; i<listTestVal.count; i++)
+            {
+                
+//                if () {
+//                    <#statements#>
+//                }
+//                
+//                
+//                NSMutableDictionary* entry = [Labeltxt objectAtIndex:i];
+//                NSLog(@"entry %@",entry);
+//                // NSString *str=[entry valueForKey:@"value"];
+//                
+//                [entry setValue:txt.text forKey:@"value"];
+//                // NSLog(@" la  bel %@",sltr);
+//                NSLog(@"entry %@",entry);
+//                [listTestVal replaceObjectAtIndex:indexPath1.row withObject:html];
+//                NSLog(@" label %@",Labeltxt);
+
+                
+                
+            }
+            
             
             break;
         }
@@ -1085,25 +1174,30 @@
         case 5:
         {
             NSLog(@"list %@",listTestVal);
-            NSString *str=[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:0] valueForKey:@"text"]];
-            NSLog(@"val is %@",str);
+       //     NSString *str=[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:0] valueForKey:@"text"]];
+          //  NSLog(@"val is %@",str);
             
             for(int i=0;i<TestSample.count;i++)
             {
-                NSString *result_value=[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:i]valueForKey:@"text"]];
+                NSString *result_value=[NSString stringWithFormat:@"%@",[listTestVal objectAtIndex:i]];
                 NSLog(@"val is %@",result_value);
+              
                 self.WebService->test_id=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:i]valueForKey:@"TestId"]];
                 self.WebService->investigation_id=[NSString stringWithFormat:@"%@",[[TestSample objectAtIndex:i]valueForKey:@"InvestigationId"]];
-                if(![[listTestVal objectAtIndex:i]valueForKey:@"text"]||[[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:i]valueForKey:@"text"]]isEqualToString:@""])
-                {
-                    self.WebService->resultval=(NSString*)[NSNull null];
-                }
-                else
-                {
-                    self.WebService->resultval=[NSString stringWithFormat:@"%@",result_value];
-                }
-                NSLog(@"result %@",self.WebService->resultval);
                 
+                self.WebService->resultval=[NSString stringWithFormat:@"%@",[listTestVal objectAtIndex:i]];
+
+                
+//                if(![[listTestVal objectAtIndex:i]valueForKey:@"text"]||[[NSString stringWithFormat:@"%@",[[listTestVal objectAtIndex:i]valueForKey:@"text"]]isEqualToString:@""])
+//                {
+//                    self.WebService->resultval=(NSString*)[NSNull null];
+//                }
+//                else
+//                {
+//                    self.WebService->resultval=[NSString stringWithFormat:@"%@",result_value];
+//                }
+//                NSLog(@"result %@",self.WebService->resultval);
+//                 
                 self.WebService->remark=(NSString*)[NSNull null];
                 [self.WebService CallServiceInsertInvestigationResult:@"http://192.168.1.202:81//LaboratoryModule/LISService.asmx/InsertInvestigationResultWithoutCompleted" Object:NULL Handler:NULL];
             }

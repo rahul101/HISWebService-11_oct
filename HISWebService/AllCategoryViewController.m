@@ -176,6 +176,16 @@
 }
 -(void)Laboratory
 {
+ 
+//    NSString *dateString = @"01-02-2010";
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//      [dateFormatter setDateFormat:@"dd/MM/yyyy"];
+// //   NSDate *dateFromString = [[NSDate alloc] init];
+//    // voila!
+//   NSDate *  dateFromString = [dateFormatter dateFromString:dateString];
+//    NSLog(@"date %@",dateFromString);
+    
+    
     
     AdviseInvestigationViewController *AdviseInv=[[AdviseInvestigationViewController alloc]init];
     //AdviseInv.LocationID=[NSString stringWithFormat:@"%@",loc];

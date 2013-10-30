@@ -40,6 +40,7 @@
     NSMutableArray *Description;
     NSMutableArray *copy_array;
     IBOutlet UIView *viewPage;
+    int chk_cmmt;
     
 }
 

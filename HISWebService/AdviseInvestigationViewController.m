@@ -4771,6 +4771,7 @@
             NSLog(@"reward point %@",RewardPoints);
             NSLog(@"is urgent %@",Isurgent);
             NSLog(@"discountprec %@",DiscountINPerc);
+            
             SetAdviseInvestigation=[[NSMutableDictionary alloc]initWithObjectsAndKeys:reffedId,@"ReferrerId",AdviseBy,@"AdvisedDoctorId" ,Isurgent,@"IsUrgent",Urgenttime,@"UrgentTime",Patientid, @"PatientId",AreaID,@"AreaId",PanelValue, @"PanelId",ReportStatus,@"ReportStatus",email,@"Email",LocationID,@"LocationId",DiscountBreakUP,@"DiscountBreakUp",discountstr,@"Discount",DeliveryStaffID,@"DeliveryStaffId",initialAmount,@"InitialAmount",reciptpre,@"ReceiptPrefix", ReportStatus,@"NewReportStatus",(NSString*)[NSNull null],@"NewDeliveryStaffId",caseid,@"CaseId",PreUrgenttime,@"PreviousUrgentTime",Refund.text,@"Refund",BillingID,@"BillingId",RewardPoints,@"RewardPoints",LoyalityId,@"LoyalityId",LogInuserId,@"loginUserID",nil];
             
             NSLog(@"dictionary is %@",SetAdviseInvestigation);
